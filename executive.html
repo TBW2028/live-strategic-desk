@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Strategic Desk — The Brink World</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #070a0f;
+      --panel: #0d121d;
+      --card: #121824;
+      --border: #1f2a3e;
+      
+      --text: #f0f4f8;
+      --text-muted: #8e9bb0;
+
+      --blue: #3b82f6;
+      --cyan: #06b6d4;
+      --teal: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: var(--font-body); padding-bottom: 60px; line-height: 1.5; }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; background: rgba(13, 18, 29, 0.92);
+      backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+      padding: 0.9rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-logo { width: 12px; height: 12px; background: var(--red); box-shadow: 0 0 10px var(--red); border-radius: 2px; }
+    .brand-title { font-size: 1.05rem; font-weight: 700; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .status-badge {
+      display: flex; align-items: center; gap: 8px; padding: 5px 12px;
+      border-radius: 999px; font-size: 0.72rem; font-family: var(--font-mono);
+      background: var(--card); border: 1px solid var(--border);
+    }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+
+    .shell { max-width: 1380px; margin: 2rem auto; padding: 0 1.5rem; }
+
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); gap: 24px; }
+    @media (max-width: 768px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+
+    /* CARDS */
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+    .card-full { grid-column: 1 / -1; }
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .card-tag { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--blue); }
+    .card-title { font-size: 1.1rem; font-weight: 700; margin-top: 2px; }
+    
+    .metric-val { font-size: 1.25rem; font-weight: 700; font-family: var(--font-mono); text-align: right; }
+    .metric-change { font-size: 0.78rem; font-weight: 600; text-align: right; font-family: var(--font-mono); }
+    .up { color: var(--teal); }
+    .down { color: var(--red); }
+
+    /* MULTI-ASSET TICKER GRIDS */
+    .asset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 4px; }
+    .asset-tile { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 10px; }
+    .asset-name { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; }
+    .asset-price { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; margin-top: 2px; }
+    .asset-chg { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 600; margin-top: 2px; }
+
+    /* CHART GRAPHICS */
+    .chart-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+    .chart-legend { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); margin-bottom: 6px; }
+
+    /* ANALYSIS & PREDICTION BOXES */
+    .analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .box-sub { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+    .box-sub-title { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+    .box-sub-title.analyse { color: var(--cyan); }
+    .box-sub-title.predict { color: var(--amber); }
+    .box-sub-text { font-size: 0.8rem; color: var(--text-muted); line-height: 1.45; }
+
+    .flash { animation: livePulse 1s ease-out; }
+    @keyframes livePulse {
+      0% { border-color: var(--blue); background-color: rgba(59, 130, 246, 0.12); }
+      100% { border-color: var(--border); background-color: var(--panel); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-logo"></div>
+      <div class="brand-title">The Brink World — Executive Desk</div>
+    </div>
+    <div class="status-badge">
+      <div class="status-dot" id="live-dot"></div>
+      <span id="live-status">CONNECTING TO RENDER STREAM...</span>
+    </div>
+  </header>
+
+  <div class="shell">
+    <div class="dashboard-grid">
+
+      <!-- 1. GLOBAL EQUITIES -->
+      <div class="card card-full" id="card-stocks">
+        <div class="card-header">
+          <div>
+            <div class="card-tag">Equities & Sector Drivers</div>
+            <div class="card-title">Global Indices & Real-Time Movers</div>
+          </div>
+          <div>
+            <div class="metric-val" style="color:var(--teal)">BALANCED</div>
+            <div class="metric-change">Vol Index (VIX): 14.80</div>
+          </div>
+        </div>
+
+        <div class="asset-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div class="asset-tile">
+            <div class="asset-name">NIFTY 50 (India)</div>
+            <div class="asset-price">24,320.10</div>
+            <div class="asset-chg up">+0.85% • TCS +2.4%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">NASDAQ 100 (US)</div>
+            <div class="asset-price">19,840.50</div>
+            <div class="asset-chg up">+1.12% • NVDA +3.1%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">KOSPI (S. Korea)</div>
+            <div class="asset-price">2,710.30</div>
+            <div class="asset-chg down">-0.42% • Samsung -1.1%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">S&P 500 (US)</div>
+            <div class="asset-price">5,540.20</div>
+            <div class="asset-chg up">+0.65% • Apple +1.5%</div>
+          </div>
+          <div class="asset-tile" style="border-color: var(--amber);">
+            <div class="asset-name" style="color:var(--amber)">DAX 40 (Germany)</div>
+            <div class="asset-price">18,120.40</div>
+            <div class="asset-chg down">-2.15% • BASF -4.2%</div>
+          </div>
+        </div>
+
+        <div class="analysis-grid">
+          <div class="box-sub">
+            <div class="box-sub-title analyse">🔍 Analyse</div>
+            <div class="box-sub-text" id="stocks-analyse">Waiting for live signal from Render...</div>
+          </div>
+          <div class="box-sub">
+            <div class="box-sub-title predict">🔮 Predict</div>
+            <div class="box-sub-text" id="stocks-predict">Waiting for live signal from Render...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. EXPANDED FOREX ENGINE -->
+      <div class="card" id="card-forex">
+        <div class="card-header">
+          <div>
+            <div class="card-tag">Currencies</div>
+            <div class="card-title">Foreign Exchange & Macro Basket</div>
+          </div>
+          <div>
+            <div class="metric-val" id="val-dxy">103.20</div>
+            <div class="metric-change down">DXY Index -0.45%</div>
+          </div>
+        </div>
+
+        <!-- Forex Basket Grid -->
+        <div class="asset-grid">
+          <div class="asset-tile">
+            <div class="asset-name">USD/INR</div>
+            <div class="asset-price">83.92</div>
+            <div class="asset-chg down">-0.12%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">EUR/USD</div>
+            <div class="asset-price">1.092</div>
+            <div class="asset-chg up">+0.30%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">USD/JPY</div>
+            <div class="asset-price">154.20</div>
+            <div class="asset-chg down">-0.85%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">GBP/USD</div>
+            <div class="asset-price">1.285</div>
+            <div class="asset-chg up">+0.22%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">USD/CNH</div>
+            <div class="asset-price">7.240</div>
+            <div class="asset-chg down">-0.08%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">AUD/USD</div>
+            <div class="asset-price">0.665</div>
+            <div class="asset-chg up">+0.45%</div>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-legend">
+            <span>DXY Dollar Index 7-Day Trend</span>
+            <span>Solid: History | Dotted: Projection</span>
+          </div>
+          <svg viewBox="0 0 500 60" style="width:100%; height:55px;" fill="none">
+            <path d="M 10 15 L 90 20 L 170 30 L 250 25 L 330 45 L 380 50" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 380 50 L 440 55 L 490 52" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+            <circle cx="380" cy="50" r="4" fill="#f59e0b"/>
+          </svg>
+        </div>
+
+        <div class="analysis-grid">
+          <div class="box-sub">
+            <div class="box-sub-title analyse">🔍 Analyse</div>
+            <div class="box-sub-text" id="forex-analyse">Waiting for live signal from Render...</div>
+          </div>
+          <div class="box-sub">
+            <div class="box-sub-title predict">🔮 Predict</div>
+            <div class="box-sub-text" id="forex-predict">Waiting for live signal from Render...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. EXPANDED COMMODITIES ENGINE -->
+      <div class="card" id="card-commodities">
+        <div class="card-header">
+          <div>
+            <div class="card-tag">Real Assets & Ags</div>
+            <div class="card-title">Metals, Energy & Agriculture</div>
+          </div>
+          <div>
+            <div class="metric-val">$2,415.50</div>
+            <div class="metric-change up">Gold +0.72%</div>
+          </div>
+        </div>
+
+        <!-- Expanded Commodities Grid -->
+        <div class="asset-grid">
+          <div class="asset-tile">
+            <div class="asset-name">Gold</div>
+            <div class="asset-price">$2,415.50</div>
+            <div class="asset-chg up">+0.72%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">Silver</div>
+            <div class="asset-price">$28.40</div>
+            <div class="asset-chg up">+1.45%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">Copper</div>
+            <div class="asset-price">$4.12/lb</div>
+            <div class="asset-chg up">+0.80%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">Wheat</div>
+            <div class="asset-price">$542.00</div>
+            <div class="asset-chg down">-1.10%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">Cocoa</div>
+            <div class="asset-price">$7,850</div>
+            <div class="asset-chg up">+3.20%</div>
+          </div>
+          <div class="asset-tile">
+            <div class="asset-name">Cotton</div>
+            <div class="asset-price">$68.20</div>
+            <div class="asset-chg down">-0.35%</div>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-legend">
+            <span>Commodity Index Trajectory</span>
+            <span>Solid: History | Dotted: Projection</span>
+          </div>
+          <svg viewBox="0 0 500 60" style="width:100%; height:55px;" fill="none">
+            <path d="M 10 50 L 90 42 L 170 45 L 250 30 L 330 20 L 380 15" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 380 15 L 440 10 L 490 8" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+            <circle cx="380" cy="15" r="4" fill="#f59e0b"/>
+          </svg>
+        </div>
+
+        <div class="analysis-grid">
+          <div class="box-sub">
+            <div class="box-sub-title analyse">🔍 Analyse</div>
+            <div class="box-sub-text" id="gold-analyse">Waiting for live signal from Render...</div>
+          </div>
+          <div class="box-sub">
+            <div class="box-sub-title predict">🔮 Predict</div>
+            <div class="box-sub-text" id="gold-predict">Waiting for live signal from Render...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. GEOPOLITICAL RISK VECTOR -->
+      <div class="card" id="card-geo">
+        <div class="card-header">
+          <div>
+            <div class="card-tag">Global Risk</div>
+            <div class="card-title">Geopolitical Threat & Supply Vector</div>
+          </div>
+          <div>
+            <div class="metric-val" style="color:var(--red);">ELEVATED</div>
+            <div class="metric-change down">Transit Friction: 82%</div>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-legend">
+            <span>7-Day Route Friction Trend</span>
+            <span>Solid: Past Week | Dotted: Predicted Trajectory</span>
+          </div>
+          <svg viewBox="0 0 500 60" style="width:100%; height:55px;" fill="none">
+            <path d="M 10 40 L 80 35 L 160 50 L 240 25 L 320 30 L 380 15" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 380 15 L 440 10 L 490 20" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+            <circle cx="380" cy="15" r="4" fill="#f59e0b"/>
+          </svg>
+        </div>
+
+        <div class="analysis-grid">
+          <div class="box-sub">
+            <div class="box-sub-title analyse">🔍 Analyse</div>
+            <div class="box-sub-text" id="geo-analyse">Waiting for live signal from Render...</div>
+          </div>
+          <div class="box-sub">
+            <div class="box-sub-title predict">🔮 Predict</div>
+            <div class="box-sub-text" id="geo-predict">Waiting for live signal from Render...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. CRUDE OIL ENGINE -->
+      <div class="card" id="card-crude">
+        <div class="card-header">
+          <div>
+            <div class="card-tag">Energy</div>
+            <div class="card-title">Crude Oil Trajectory (Brent & WTI)</div>
+          </div>
+          <div>
+            <div class="metric-val" id="val-brent">$82.40</div>
+            <div class="metric-change up">Brent +1.15% • WTI $78.10 (+0.9%)</div>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-legend">
+            <span>Brent Crude ($/bbl) Trend</span>
+            <span>Solid: Past Week | Dotted: Predicted Trajectory</span>
+          </div>
+          <svg viewBox="0 0 500 60" style="width:100%; height:55px;" fill="none">
+            <path d="M 10 40 L 90 35 L 170 48 L 250 40 L 330 25 L 380 20" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 380 20 L 440 22 L 490 30" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+            <circle cx="380" cy="20" r="4" fill="#f59e0b"/>
+          </svg>
+        </div>
+
+        <div class="analysis-grid">
+          <div class="box-sub">
+            <div class="box-sub-title analyse">🔍 Analyse</div>
+            <div class="box-sub-text" id="crude-analyse">Waiting for live signal from Render...</div>
+          </div>
+          <div class="box-sub">
+            <div class="box-sub-title predict">🔮 Predict</div>
+            <div class="box-sub-text" id="crude-predict">Waiting for live signal from Render...</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const STREAM_URL = 'https://live-strategic-desk.onrender.com/api/stream';
+
+    function initStream() {
+      const eventSource = new EventSource(STREAM_URL);
+
+      eventSource.onopen = () => {
+        document.getElementById('live-status').innerText = 'SYSTEM ENGINE: LIVE (RENDER + GEMINI)';
+        document.getElementById('live-dot').style.background = 'var(--teal)';
+      };
+
+      eventSource.onmessage = (e) => {
+        try {
+          const payload = JSON.parse(e.data);
+          updateUI(payload);
+        } catch (err) {
+          console.error("Stream parse error:", err);
+        }
+      };
+
+      eventSource.onerror = () => {
+        document.getElementById('live-status').innerText = 'RECONNECTING TO ENGINE...';
+        document.getElementById('live-dot').style.background = 'var(--amber)';
+      };
+    }
+
+    function updateUI(data) {
+      const { insights } = data;
+
+      if (insights) {
+        if (insights.stocks) {
+          document.getElementById('stocks-analyse').innerText = insights.stocks.analyse;
+          document.getElementById('stocks-predict').innerText = insights.stocks.predict;
+        }
+        document.getElementById('geo-analyse').innerText = insights.geopolitical.analyse;
+        document.getElementById('geo-predict').innerText = insights.geopolitical.predict;
+
+        document.getElementById('forex-analyse').innerText = insights.forex.analyse;
+        document.getElementById('forex-predict').innerText = insights.forex.predict;
+
+        document.getElementById('gold-analyse').innerText = insights.commodities.analyse;
+        document.getElementById('gold-predict').innerText = insights.commodities.predict;
+
+        document.getElementById('crude-analyse').innerText = insights.crude.analyse;
+        document.getElementById('crude-predict').innerText = insights.crude.predict;
+      }
+
+      document.querySelectorAll('.card').forEach(c => {
+        c.classList.add('flash');
+        setTimeout(() => c.classList.remove('flash'), 1000);
+      });
+    }
+
+    initStream();
+  </script>
+</body>
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>THE BRINK WORLD — Smart Stories & Future Trends</title>
+<meta name="description" content="Simple, smart updates on culture, technology, and where the world is heading next.">
+<meta name="keywords" content="future trends, cultural insights, smart ideas, the brink world">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://thebrinkworld.com/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thebrinkworld.com/">
+<meta property="og:title" content="THE BRINK WORLD — Smart Stories Index">
+<meta property="og:description" content="Simple, smart updates on culture, technology, and where the world is heading next.">
+<meta property="og:image" content="https://thebrinkworld.com/assets/og-cover.jpg">
+
+<!-- Twitter Card Platform Architecture -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://thebrinkworld.com/">
+<meta name="twitter:title" content="THE BRINK WORLD — Smart Stories Index">
+<meta name="twitter:description" content="Simple, smart updates on culture, technology, and where the world is heading next.">
+<meta name="twitter:image" content="https://thebrinkworld.com/assets/og-cover.jpg">
+
+<!-- Structured JSON-LD Data Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsMediaOrganization",
+  "name": "The Brink World",
+  "url": "https://thebrinkworld.com/",
+  "logo": "https://thebrinkworld.com/assets/logo.png",
+  "description": "A curated perspective hub tracking modern culture, global ideas, and macro trends.",
+  "sameAs": [
+    "https://linkedin.com/company/thebrinkworld"
+  ]
+}
+</script>
+
+<!-- Import Heavy Geometric Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg-deep: #0a0b0e;
+  --bg-panel: #111318;
+  --bg-panel-light: #181b22;
+  --accent-cyan: #00f3ff;
+  --accent-cyan-dim: #00a4ad;
+  --accent-red: #ff2a2a;
+  
+  --text-pure: #ffffff;
+  --text-muted: #6f7a8a;
+  --text-dim: #a0aec0;
+  --border-subtle: #1f242e;
+  
+  --font-display: 'Archivo Black', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* READING PROGRESS BAR */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent-cyan);
+  width: 0%;
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+}
+
+/* RED & WHITE TITLE HIGHLIGHT UTILITY */
+.brand-accent-red { color: var(--accent-red); }
+
+/* HIGH-IMPACT ULTRA MINIMALIST NAV */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 6%;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(10, 11, 14, 0.9);
+  backdrop-filter: blur(20px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: -0.03em;
+  color: var(--text-pure);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.logo span { color: var(--accent-red); }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: color 0.25s ease;
+}
+.nav-link:hover, .nav-link.active { color: var(--accent-cyan); }
+
+/* HERO SECTION */
+.hero-terminal {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 6% 40px 6%;
+}
+.hero-meta-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.system-status-ticker {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  letter-spacing: 0.2em;
+  border-bottom: 2px solid var(--accent-cyan);
+  padding-bottom: 4px;
+}
+.hero-member-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 10px;
+  color: var(--text-pure);
+  border-radius: 2px;
+}
+.massive-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 90px);
+  line-height: 0.98;
+  color: var(--text-pure);
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero-descriptor {
+  font-size: clamp(16px, 1.3vw, 20px);
+  color: var(--text-dim);
+  max-width: 820px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* UTILITY / SEARCH INTERFACE */
+.search-container {
+  padding: 0 6% 40px 6%;
+}
+.search-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+.search-input {
+  width: 100%;
+  background: var(--bg-panel);
+  border: 2px solid var(--border-subtle);
+  padding: 18px 20px 18px 180px;
+  color: var(--text-pure);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.search-input:focus { outline: none; border-color: var(--accent-cyan); box-shadow: 0 0 30px rgba(0, 243, 255, 0.1); }
+.search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+/* MAIN INTERFACE MATRIX AREA */
+.dashboard-shell {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 6% 80px 6%;
+  display: grid;
+  grid-template-columns: 2.8fr 1.2fr;
+  gap: 60px;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-shell { grid-template-columns: 1fr; }
+  .hero-terminal { padding-top: 50px; }
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-transform: uppercase;
+  color: var(--text-pure);
+  letter-spacing: 0.15em;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-subtle);
+  margin-bottom: 30px;
+}
+
+.feed-stream { display: flex; flex-direction: column; gap: 32px; }
+
+/* ARTICLE PANELS */
+.intel-card {
+  background: var(--bg-panel);
+  border: 2px solid var(--border-subtle);
+  padding: 36px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.intel-card:hover {
+  border-color: var(--accent-cyan);
+  background: var(--bg-panel-light);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+.intel-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  letter-spacing: 0.05em;
+  flex-wrap: wrap;
+}
+.intel-tag { color: var(--accent-cyan); font-weight: 700; }
+.intel-date { color: var(--text-muted); }
+.intel-reading-time { color: var(--text-muted); border-left: 1px solid var(--border-subtle); padding-left: 16px; }
+
+.intel-card h3 {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.5vw, 36px);
+  line-height: 1.1;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+.intel-card h3 a { color: var(--text-pure); text-decoration: none; transition: color 0.2s ease; }
+.intel-card h3 a:hover { color: var(--accent-cyan); }
+
+.disclosure-block {
+  font-size: 16px;
+  color: var(--text-dim);
+  max-width: 760px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.action-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.expand-trigger-btn {
+  display: inline-block;
+  background: transparent;
+  border: 2px solid var(--border-subtle);
+  color: var(--text-pure);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+.intel-card:hover .expand-trigger-btn {
+  border-color: var(--accent-cyan);
+  background: var(--accent-cyan);
+  color: var(--bg-deep);
+}
+
+.aux-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 9px 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+.aux-btn:hover, .aux-btn.saved {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.share-suite {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.share-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
+.share-link { font-family: var(--font-mono); font-size: 12px; text-decoration: none; text-transform: uppercase; color: var(--text-pure); opacity: 0.6; transition: all 0.2s ease; }
+.share-link:hover { opacity: 1; color: var(--accent-cyan); }
+.share-copy-btn { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-muted); padding: 6px 12px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; cursor: pointer; transition: all 0.2s ease; }
+.share-copy-btn:hover { border-color: var(--accent-cyan); color: var(--text-pure); }
+
+/* COMPACT SUBSCRIPTION SEGMENT */
+.premium-lock-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--accent-red);
+  padding: 24px 28px;
+  margin-bottom: 36px;
+}
+.premium-lock-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.premium-lock-panel h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--text-pure);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+.premium-lock-panel p {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+}
+.input-gate-group {
+  display: flex;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border-subtle);
+  padding: 4px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.input-gate-group:focus-within {
+  border-color: var(--accent-cyan);
+}
+.gate-input {
+  background: transparent;
+  border: none;
+  color: var(--text-pure);
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  flex: 2;
+  min-width: 220px;
+  outline: none;
+}
+.gate-btn {
+  background: var(--accent-cyan);
+  color: var(--bg-deep);
+  border: none;
+  padding: 10px 22px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.gate-btn:hover { opacity: 0.9; }
+
+/* SIDEBAR REFINEMENTS */
+.intelligence-sidebar { background: var(--bg-panel); border: 2px solid var(--border-subtle); padding: 28px; position: sticky; top: 120px; }
+.sidebar-metric { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-subtle); }
+.sidebar-metric:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.metric-title { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; }
+.metric-value { font-size: 16px; font-weight: 700; color: var(--text-pure); margin-top: 6px; }
+
+footer {
+  background: var(--bg-panel);
+  border-top: 2px solid var(--border-subtle);
+  padding: 60px 6%;
+  margin-top: 80px;
+}
+.footer-wrap { max-width: 580px; margin: 0 auto; text-align: center; }
+.footer-wrap h4 { font-family: var(--font-display); font-size: 24px; color: var(--text-pure); text-transform: uppercase; margin-bottom: 12px; }
+.footer-wrap p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; font-family: var(--font-mono); }
+.sub-input { background: var(--bg-deep); border: 1px solid var(--border-subtle); padding: 14px; color: var(--text-pure); font-family: var(--font-body); font-size: 14px; width: 100%; text-align: center; outline: none; transition: border-color 0.2s ease; }
+.sub-input:focus { border-color: var(--accent-cyan); }
+.sub-btn { background: transparent; border: 2px solid var(--accent-cyan); color: var(--accent-cyan); padding: 14px; font-size: 12px; font-weight: 700; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; width: 100%; margin-top: 12px; transition: all 0.2s ease; }
+.sub-btn:hover { background: var(--accent-cyan); color: var(--bg-deep); }
+
+.loading-notice { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); text-align: center; padding: 40px 0; }
+</style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<nav>
+  <a href="/" class="logo">The Brink <span>World</span></a>
+  <div class="nav-links">
+    <a href="/" class="nav-link active">Stories</a>
+    <a href="/about.html" class="nav-link">About</a>
+    <a href="/contact.html" class="nav-link">Contact</a>
+  </div>
+</nav>
+
+<header class="hero-terminal">
+  <div class="hero-meta-bar">
+    <div class="system-status-ticker">// STATUS: ONLINE // SYSTEM READY</div>
+    <div class="hero-member-badge">NETWORK: <span id="hero-member-counter" style="color:var(--accent-cyan);">11,201+</span></div>
+  </div>
+  <h1 class="massive-hero-title">A simple guide to where the <span class="brand-accent-red">world</span> is going next.</h1>
+  <p class="hero-descriptor">We track global shifts, explain the patterns behind them, and project where they are heading next. By connecting the dots early, we help you make sharper, more confident decisions before the rest of the world even notices the trend.</p>
+</header>
+
+<div class="search-container">
+  <div class="search-wrapper">
+    <span class="search-icon">// SEARCH_POSTS:</span>
+    <input type="text" id="intel-search" class="search-input" placeholder="Type a keyword, place, or topic...">
+  </div>
+</div>
+
+<div class="dashboard-shell">
+  <main>
+    
+    <section class="premium-lock-panel">
+      <div class="premium-lock-panel-header">
+        <h3>Signal Before The Noise <span class="brand-accent-red">// EARLY ACCESS</span></h3>
+        <div style="font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--accent-cyan); font-weight: 700;">
+          [ NEWSLETTER ]
+        </div>
+      </div>
+      <p>Get our latest real-world updates sent straight to your inbox or WhatsApp.</p>
+      
+      <form id="index-terminal-form" onsubmit="handleTerminalSubscribe(event, 'Index Main Dashboard')">
+        <div class="input-gate-group">
+          <input type="text" id="index-terminal-input" class="gate-input" placeholder="ENTER EMAIL OR WHATSAPP NUMBER..." required>
+          <button type="submit" id="index-terminal-btn" class="gate-btn">JOIN NOW →</button>
+        </div>
+      </form>
+    </section>
+
+    <div class="section-label">Latest Stories <span class="brand-accent-red">Archive</span></div>
+    <section class="feed-stream" id="feed-target" aria-live="polite">
+      <div class="loading-notice">Loading stories...</div>
+    </section>
+  </main>
+
+  <aside>
+    <div class="section-label">Reading Room <span class="brand-accent-red">// INTEL</span></div>
+    <div class="intelligence-sidebar">
+      <div class="sidebar-metric">
+        <div class="metric-title">Active Members</div>
+        <div class="metric-value" id="active-member-counter" style="color: var(--accent-cyan);">11,201+ Thinkers</div>
+      </div>
+      <div class="sidebar-metric">
+        <div class="metric-title">Prediction Rate</div>
+        <div class="metric-value">97%</div>
+      </div>
+      <div class="sidebar-metric">
+        <div class="metric-title">Desk Access</div>
+        <div class="metric-value" style="font-size: 13px; font-weight: 500; color: var(--text-dim); line-height: 1.4; margin-top: 6px;">
+          Contact our desk to request custom research, feature your writing, or underwrite an upcoming briefing.
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-wrap">
+    <h4>Never Miss A <span class="brand-accent-red">Story</span></h4>
+    <p>Get our latest deep dives cleanly sent directly to your phone or inbox.</p>
+    <form id="global-footer-sub" onsubmit="handleTerminalSubscribe(event, 'Global Footer Subscription')">
+      <input type="text" id="footer-sub-value" class="sub-input" placeholder="Enter Email or WhatsApp Number" required>
+      <button type="submit" id="footer-sub-btn" class="sub-btn">Keep Me Updated</button>
+    </form>
+  </div>
+</footer>
+
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxd5wE6bdjxp81qfRXeb37lbElNTXPGrSJbvdIYr5I6omfjZPXro4vEL7NP26lVmTBYeQ/exec';
+let cachedArticles = [];
+
+// 1. SCROLL PROGRESS CONTROLLER
+window.addEventListener('scroll', () => {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  const bar = document.getElementById('scroll-progress');
+  if (bar) bar.style.width = scrolled + '%';
+});
+
+// 2. DYNAMIC MEMBER COUNTER ENGINE
+function updateDynamicMemberCount() {
+  const BASE_COUNT = 11201;
+  const INCREMENT_PER_VIEW = 11;
+  
+  let currentCount = parseInt(localStorage.getItem('brink_member_count'), 10);
+  if (!currentCount || isNaN(currentCount) || currentCount < BASE_COUNT) {
+    currentCount = BASE_COUNT;
+  }
+  
+  currentCount += INCREMENT_PER_VIEW;
+  localStorage.setItem('brink_member_count', currentCount);
+  
+  const el = document.getElementById('active-member-counter');
+  if (el) el.innerText = `${currentCount.toLocaleString()}+ Thinkers`;
+
+  const heroEl = document.getElementById('hero-member-counter');
+  if (heroEl) heroEl.innerText = `${currentCount.toLocaleString()}+`;
+}
+
+function styleTitleWithRedAccent(titleText) {
+  if (!titleText) return 'Untitled Story';
+  const words = titleText.trim().split(' ');
+  if (words.length <= 1) return titleText;
+  
+  const lastWord = words.pop();
+  return `${words.join(' ')} <span class="brand-accent-red">${lastWord}</span>`;
+}
+
+function createCleanSnippet(text) {
+  if (!text) return '';
+  return text.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
+}
+
+// 3. BOOKMARKING STORAGE LOGIC
+function getSavedArticles() {
+  return JSON.parse(localStorage.getItem('brink_saved_articles') || '[]');
+}
+
+function toggleBookmark(postID, btnEl) {
+  let saved = getSavedArticles();
+  if (saved.includes(postID)) {
+    saved = saved.filter(id => id !== postID);
+    btnEl.classList.remove('saved');
+    btnEl.innerText = '★ SAVE';
+  } else {
+    saved.push(postID);
+    btnEl.classList.add('saved');
+    btnEl.innerText = '★ SAVED';
+  }
+  localStorage.setItem('brink_saved_articles', JSON.stringify(saved));
+}
+
+// 4. FETCH & RENDER STORIES
+function loadArticles() {
+  fetch(`${scriptURL}?action=get_articles`)
+    .then(res => res.json())
+    .then(data => {
+      cachedArticles = data.filter(article => article && (article.title || article.body));
+      
+      cachedArticles.sort((a, b) => {
+        const idA = a.ID || a.id || a.Id || '';
+        const idB = b.ID || b.id || b.Id || '';
+        return (parseInt(idB.toString().replace(/\D/g, ''), 10) || 0) - (parseInt(idA.toString().replace(/\D/g, ''), 10) || 0);
+      });
+
+      renderArticles(cachedArticles);
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById('feed-target').innerHTML = '<div class="loading-notice" style="color:#ff4a4a;">Could not load updates right now.</div>';
+    });
+}
+
+function renderArticles(articles) {
+  const target = document.getElementById('feed-target');
+  if (!target) return;
+  
+  if (articles.length === 0) {
+    target.innerHTML = '<div class="loading-notice">No stories match your search.</div>';
+    return;
+  }
+
+  const savedList = getSavedArticles();
+  const fragment = document.createDocumentFragment();
+
+  articles.forEach(article => {
+    const card = document.createElement('article');
+    card.className = 'intel-card';
+    
+    const rawID = article.ID || article.id || article.Id || '';
+    const postID = rawID ? rawID.toString().toLowerCase().trim().replace(/\s+/g, '-') : `intel-${Math.random().toString(36).substr(2, 5)}`;
+    card.id = postID;
+
+    const isBookmarked = savedList.includes(postID);
+    const wordCount = (article.body || '').split(/\s+/).length;
+    const readTime = Math.max(1, Math.round(wordCount / 200));
+
+    let domainBase = window.location.origin;
+    if (domainBase.includes('cdpn.io') || domainBase.includes('codepen.io') || domainBase === 'null') {
+      domainBase = 'https://thebrinkworld.com';
+    }
+    
+    const shareURL = `${domainBase}/article.html?id=${postID}`;
+    const encodedText = encodeURIComponent(`"${article.title}"\n\nRead it here: ${shareURL}`);
+    const encodedShareURL = encodeURIComponent(shareURL);
+
+    const styledTitle = styleTitleWithRedAccent(article.title);
+    const cleanSnippet = createCleanSnippet(article.body);
+
+    card.innerHTML = `
+      <div class="intel-meta">
+        <span class="intel-tag">// ${article.tag || 'TOPIC'}</span>
+        <span class="intel-date">${article.date || ''}</span>
+        <span class="intel-reading-time">${readTime} MIN READ</span>
+      </div>
+      <h3><a href="/article.html?id=${postID}" rel="bookmark">${styledTitle}</a></h3>
+      <div class="disclosure-block">
+        <p>${cleanSnippet}</p>
+      </div>
+
+      <div class="action-bar-row">
+        <a href="/article.html?id=${postID}" class="expand-trigger-btn">[READ FULL STORY]</a>
+        <button onclick="toggleBookmark('${postID}', this)" class="aux-btn ${isBookmarked ? 'saved' : ''}">${isBookmarked ? '★ SAVED' : '★ SAVE'}</button>
+      </div>
+
+      <div class="share-suite">
+        <span class="share-label">Share:</span>
+        <a href="https://api.whatsapp.com/send?text=${encodedText}" target="_blank" class="share-link" rel="noopener noreferrer">WhatsApp</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${encodedShareURL}" target="_blank" class="share-link" rel="noopener noreferrer">LinkedIn</a>
+        <button onclick="copyIntelLink('${shareURL}', this)" class="share-copy-btn">Copy Link</button>
+      </div>
+    `;
+    fragment.appendChild(card);
+  });
+
+  target.innerHTML = '';
+  target.appendChild(fragment);
+}
+
+// 5. SEARCH FILTERING
+document.getElementById('intel-search').addEventListener('input', function(e) {
+  const query = e.target.value.toLowerCase().trim();
+  let filtered = cachedArticles;
+
+  if (query) {
+    filtered = filtered.filter(art => {
+      return (art.title && art.title.toLowerCase().includes(query)) ||
+             (art.body && art.body.toLowerCase().includes(query)) ||
+             (art.tag && art.tag.toLowerCase().includes(query));
+    });
+  }
+  renderArticles(filtered);
+});
+
+function copyIntelLink(url, button) {
+  navigator.clipboard.writeText(url).then(() => {
+    const orig = button.innerText; button.innerText = "COPIED ✓";
+    setTimeout(() => { button.innerText = orig; }, 1500);
+  });
+}
+
+// 6. FAILSAFE LOCATION TRACKING & FORM SUBMISSION
+function handleTerminalSubscribe(e, contextSource) {
+  e.preventDefault();
+  const inputId = contextSource === 'Index Main Dashboard' ? 'index-terminal-input' : 'footer-sub-value';
+  const btnId = contextSource === 'Index Main Dashboard' ? 'index-terminal-btn' : 'footer-sub-btn';
+  
+  const inputEl = document.getElementById(inputId);
+  const val = inputEl ? inputEl.value.trim() : '';
+  const btn = document.getElementById(btnId);
+  
+  if (!val) return;
+
+  if (btn) {
+    btn.innerText = "SAVING...";
+    btn.disabled = true;
+  }
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 2500);
+
+  fetch('https://ipapi.co/json/', { signal: controller.signal })
+    .then(res => {
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error('API restricted or locked');
+      return res.json();
+    })
+    .then(loc => {
+      let location = "Locked";
+      if (loc && !loc.error) {
+        if (loc.city && loc.country_name) {
+          location = `${loc.city}, ${loc.country_name}`;
+        } else if (loc.country_name) {
+          location = loc.country_name;
+        }
+      }
+      sendData(val, `Active Identity: ${contextSource}`, location, btn, inputEl);
+    })
+    .catch(() => { 
+      sendData(val, `Active Identity: ${contextSource}`, "Locked", btn, inputEl); 
+    });
+}
+
+function sendData(value, source, location, btn, inputEl) {
+  const formData = new FormData();
+  formData.append(value.includes('@') ? 'email' : 'whatsapp', value);
+  formData.append('source', source);
+  formData.append('location', location);
+
+  fetch(scriptURL, { method: 'POST', body: formData })
+    .then(() => { 
+      if (btn) btn.innerText = "JOINED ✓";
+      if (inputEl) inputEl.value = "";
+      setTimeout(() => {
+        if (btn) {
+          btn.innerText = source.includes('Dashboard') ? "JOIN NOW →" : "Keep Me Updated";
+          btn.disabled = false;
+        }
+      }, 3000);
+    })
+    .catch(() => { 
+      if (btn) btn.innerText = "JOINED ✓";
+      if (inputEl) inputEl.value = "";
+      setTimeout(() => {
+        if (btn) {
+          btn.innerText = source.includes('Dashboard') ? "JOIN NOW →" : "Keep Me Updated";
+          btn.disabled = false;
+        }
+      }, 3000);
+    });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  updateDynamicMemberCount();
+  loadArticles();
+});
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0d385e13cecf4591b6f7cc87b1f26940"}'></script>
+
+</body>
+</html>
