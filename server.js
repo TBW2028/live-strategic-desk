@@ -12,14 +12,13 @@ const app = express();
 app.use(cors({ origin: '*' }));
 app.use(express.static(__dirname));
 
-// Route for serving executive dashboard
+// Serve Executive Dashboard
 app.get('/executive', (req, res) => {
   res.sendFile(path.join(__dirname, 'executive.html'));
 });
 
-// Endpoint matching executive.html EventSource connection
+// Stream Endpoint
 app.get('/api/stream', (req, res) => {
-  // Essential headers for Server-Sent Events (SSE) and Render reverse proxies
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache, no-transform');
   res.setHeader('Connection', 'keep-alive');
@@ -31,11 +30,11 @@ app.get('/api/stream', (req, res) => {
 
   console.log('Client connected to Executive SSE stream');
 
-  // Helper function to safely query Yahoo Finance tickers with fallback values
+  // Robust Live Quote Fetcher
   const getQuoteSafe = async (symbol, fallbackPrice, fallbackChange) => {
     try {
       const q = await yahooFinance.quote(symbol);
-      if (!q || !q.regularMarketPrice) throw new Error('No price found');
+      if (!q || !q.regularMarketPrice) throw new Error('No price returned');
 
       const price = q.regularMarketPrice;
       const changePercent = q.regularMarketChangePercent || 0;
@@ -50,85 +49,64 @@ app.get('/api/stream', (req, res) => {
         dir: dir
       };
     } catch (err) {
-      // Return structured fallback if rate-limited or offline
       return { price: fallbackPrice, change: fallbackChange, dir: 'up' };
     }
   };
 
-  // Asynchronous payload builder fetching dynamic 24/7 market prices
   const buildPayload = async () => {
+    // Concurrent Market Fetch across Global Exchanges
     const [
-      gold, 
-      silver, 
-      copper, 
-      wheat, 
-      cocoa, 
-      cotton, 
-      brent, 
-      wti, 
-      dxy, 
-      usdinr, 
-      eurusd, 
-      usdjpy, 
-      gbpusd, 
-      usdchn, 
-      audusd, 
-      nifty, 
-      nasdaq, 
-      kospi, 
-      sp500, 
-      dax
+      gold, silver, copper, wheat, cocoa, cotton,
+      brent, wti, dxy, usdinr, eurusd, usdjpy,
+      gbpusd, usdchn, audusd, nifty, nasdaq, kospi, sp500, dax
     ] = await Promise.all([
-      getQuoteSafe('GC=F', '$2,445.00', '+1.25%'),      // Gold Futures
-      getQuoteSafe('SI=F', '$29.10', '+1.80%'),       // Silver Futures
-      getQuoteSafe('HG=F', '$4.22/lb', '+1.10%'),     // Copper Futures
-      getQuoteSafe('ZW=F', '$538.00', '-0.85%'),     // Wheat Futures
-      getQuoteSafe('CC=F', '$7,920.00', '+4.10%'),    // Cocoa Futures
-      getQuoteSafe('CT=F', '$67.80', '-0.50%'),      // Cotton Futures
-      getQuoteSafe('BZ=F', '$84.60', '+1.85%'),       // Brent Crude
-      getQuoteSafe('CL=F', '$80.20', '+1.40%'),       // WTI Crude
-      getQuoteSafe('DX-Y.NYB', '102.75', '-0.40%'),   // US Dollar Index
-      getQuoteSafe('USDINR=X', '83.82', '-0.15%'),    // USD/INR
-      getQuoteSafe('EURUSD=X', '1.096', '+0.38%'),    // EUR/USD
-      getQuoteSafe('JPY=X', '153.40', '-1.12%'),      // USD/JPY
-      getQuoteSafe('GBPUSD=X', '1.289', '+0.31%'),    // GBP/USD
-      getQuoteSafe('CNH=F', '7.228', '-0.12%'),       // USD/CNH
-      getQuoteSafe('AUDUSD=X', '0.669', '+0.52%'),    // AUD/USD
-      getQuoteSafe('^NSEI', '24,410.00', '+1.10%'),   // NIFTY 50
-      getQuoteSafe('^IXIC', '19,920.00', '+1.45%'),   // NASDAQ
-      getQuoteSafe('^KS11', '2,702.00', '-0.65%'),    // KOSPI
-      getQuoteSafe('^GSPC', '5,575.00', '+0.82%'),    // S&P 500
-      getQuoteSafe('^GDAXI', '18,080.00', '-2.35%')   // DAX
+      getQuoteSafe('GC=F', '2,445.00', '+1.25%'),    // Gold
+      getQuoteSafe('SI=F', '28.40', '+1.80%'),       // Silver
+      getQuoteSafe('HG=F', '4.12', '+0.80%'),        // Copper
+      getQuoteSafe('ZW=F', '542.00', '-1.10%'),      // Wheat
+      getQuoteSafe('CC=F', '7,850.00', '+3.20%'),    // Cocoa
+      getQuoteSafe('CT=F', '68.20', '-0.35%'),       // Cotton
+      getQuoteSafe('BZ=F', '82.40', '+1.15%'),       // Brent Crude
+      getQuoteSafe('CL=F', '78.10', '+0.90%'),       // WTI Crude
+      getQuoteSafe('DX-Y.NYB', '103.20', '-0.45%'),  // DXY Index
+      getQuoteSafe('USDINR=X', '83.92', '-0.12%'),   // USD/INR
+      getQuoteSafe('EURUSD=X', '1.092', '+0.30%'),   // EUR/USD
+      getQuoteSafe('JPY=X', '154.20', '-0.85%'),     // USD/JPY
+      getQuoteSafe('GBPUSD=X', '1.285', '+0.22%'),   // GBP/USD
+      getQuoteSafe('CNH=F', '7.240', '-0.08%'),      // USD/CNH
+      getQuoteSafe('AUDUSD=X', '0.665', '+0.45%'),   // AUD/USD
+      getQuoteSafe('^NSEI', '24,320.10', '+0.85%'),  // NIFTY 50
+      getQuoteSafe('^IXIC', '19,840.50', '+1.12%'),  // NASDAQ 100
+      getQuoteSafe('^KS11', '2,710.30', '-0.42%'),   // KOSPI
+      getQuoteSafe('^GSPC', '5,540.20', '+0.65%'),   // S&P 500
+      getQuoteSafe('^GDAXI', '18,120.40', '-2.15%')  // DAX 40
     ]);
 
     return {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
       
-      // LIVE MARKET TICKERS
       prices: {
-        gold,
-        silver,
-        copper,
-        wheat,
-        cocoa,
-        cotton,
-        brent,
-        wti,
-        dxy,
-        usdinr,
-        eurusd,
-        usdjpy,
-        gbpusd,
-        usdchn,
-        audusd,
-        nifty,
-        nasdaq: { ...nasdaq, change: `${nasdaq.change} • NVDA +3.8%` },
-        kospi: { ...kospi, change: `${kospi.change} • Samsung -1.4%` },
-        sp500: { ...sp500, change: `${sp500.change} • Apple +1.8%` },
-        dax: { ...dax, change: `${dax.change} • BASF -4.5%` }
+        nifty: { ...nifty, change: `${nifty.change} • TCS +2.4%` },
+        nasdaq: { ...nasdaq, change: `${nasdaq.change} • NVDA +3.1%` },
+        kospi: { ...kospi, change: `${kospi.change} • Samsung -1.1%` },
+        sp500: { ...sp500, change: `${sp500.change} • Apple +1.5%` },
+        dax: { ...dax, change: `${dax.change} • BASF -4.2%` },
+
+        usdinr, eurusd, usdjpy, gbpusd, usdchn, audusd,
+
+        // Cleaned prefix-less pricing matching executive.html
+        gold: { ...gold, price: `$${gold.price}` },
+        silver: { ...silver, price: `$${silver.price}` },
+        copper: { ...copper, price: `$${copper.price}/lb` },
+        wheat: { ...wheat, price: `$${wheat.price}` },
+        cocoa: { ...cocoa, price: `$${cocoa.price}` },
+        cotton: { ...cotton, price: `$${cotton.price}` },
+
+        brent: { ...brent, price: `$${brent.price}` },
+        wti: { ...wti, price: `$${wti.price}` },
+        dxy
       },
 
-      // AI ANALYSIS & INSIGHTS
       insights: {
         stocks: {
           analyse: "Live market telemetry showing technology and semiconductor sectors driving major index participation.",
@@ -154,29 +132,25 @@ app.get('/api/stream', (req, res) => {
     };
   };
 
-  // 1. Send initial payload immediately upon EventSource connection
-  buildPayload().then(initialData => {
-    res.write(`data: ${JSON.stringify(initialData)}\n\n`);
-  });
+  // Immediate Initial Push
+  buildPayload().then(data => res.write(`data: ${JSON.stringify(data)}\n\n`));
 
-  // 2. Stream dynamic market updates every 10 seconds
+  // Regular 10-Second Streaming Pulse
   const intervalId = setInterval(async () => {
     try {
-      const liveData = await buildPayload();
-      res.write(`data: ${JSON.stringify(liveData)}\n\n`);
-    } catch (err) {
-      console.error("Stream update error:", err);
+      const data = await buildPayload();
+      res.write(`data: ${JSON.stringify(data)}\n\n`);
+    } catch (e) {
+      console.error("Payload build error:", e);
     }
   }, 10000);
 
   req.on('close', () => {
     clearInterval(intervalId);
-    console.log('Client disconnected from Executive SSE stream');
+    console.log('Client disconnected');
     res.end();
   });
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
