@@ -30,7 +30,7 @@ app.get('/api/stream', (req, res) => {
 
   console.log('Client connected to Executive SSE stream');
 
-  // Robust Live Quote Fetcher with updated baseline benchmarks
+  // Robust Live Quote Fetcher with updated benchmark handles
   const getQuoteSafe = async (symbol, fallbackPrice, fallbackChange) => {
     let price;
     let changePercent = 0;
@@ -49,7 +49,7 @@ app.get('/api/stream', (req, res) => {
       changePercent = parseFloat(fallbackChange.replace(/[^0-9.-]/g, '')) || 0.5;
     }
 
-    // Apply realistic +/- 0.08% micro-tick fluctuation for live streaming feel
+    // Apply subtle +/- 0.08% micro-tick fluctuation for smooth live visual feedback
     const microJitter = (Math.random() - 0.48) * 0.0016;
     price = price * (1 + microJitter);
 
@@ -66,27 +66,36 @@ app.get('/api/stream', (req, res) => {
   };
 
   const buildPayload = async () => {
-    // Concurrent Market Fetch with updated, modern price baselines
+    // Concurrent Market Fetch across Global Exchanges with recalibrated benchmarks
     const [
       gold, silver, copper, wheat, cocoa, cotton,
       brent, wti, dxy, usdinr, eurusd, usdjpy,
       gbpusd, usdchn, audusd, nifty, nasdaq, kospi, sp500, dax
     ] = await Promise.all([
-      getQuoteSafe('GC=F', '4,333.00', '+0.85%'),    // Gold (Updated)
-      getQuoteSafe('SI=F', '38.50', '+1.20%'),       // Silver
+      // Precious & Industrial Metals
+      getQuoteSafe('GC=F', '4,333.00', '+0.85%'),    // Gold Spot/Futures
+      getQuoteSafe('SI=F', '64.20', '+1.45%'),       // Silver Spot/Futures
       getQuoteSafe('HG=F', '4.45', '+0.60%'),        // Copper
+
+      // Agricultural Commodities
       getQuoteSafe('ZW=F', '565.00', '-0.40%'),      // Wheat
       getQuoteSafe('CC=F', '8,200.00', '+2.10%'),    // Cocoa
       getQuoteSafe('CT=F', '72.40', '+0.15%'),       // Cotton
+
+      // Energy & Macro Indices
       getQuoteSafe('BZ=F', '85.20', '+0.95%'),       // Brent Crude
       getQuoteSafe('CL=F', '81.40', '+0.80%'),       // WTI Crude
       getQuoteSafe('DX-Y.NYB', '101.80', '-0.25%'),  // DXY Index
+
+      // Forex Basket
       getQuoteSafe('USDINR=X', '86.50', '+0.10%'),   // USD/INR
       getQuoteSafe('EURUSD=X', '1.088', '+0.15%'),   // EUR/USD
       getQuoteSafe('JPY=X', '151.20', '-0.45%'),     // USD/JPY
       getQuoteSafe('GBPUSD=X', '1.295', '+0.28%'),   // GBP/USD
       getQuoteSafe('CNH=F', '7.180', '-0.05%'),      // USD/CNH
       getQuoteSafe('AUDUSD=X', '0.672', '+0.35%'),   // AUD/USD
+
+      // Global Equities Indices
       getQuoteSafe('^NSEI', '24,850.00', '+0.65%'),  // NIFTY 50
       getQuoteSafe('^IXIC', '20,450.00', '+0.95%'),  // NASDAQ 100
       getQuoteSafe('^KS11', '2,780.00', '-0.30%'),   // KOSPI
@@ -132,7 +141,7 @@ app.get('/api/stream', (req, res) => {
           predict: "USD/JPY exposure subject to short-term carry unwind following central bank adjustments."
         },
         commodities: {
-          analyse: `Precious metals feed active: Gold spot/futures trading live around ${gold.price}.`,
+          analyse: `Precious metals feed active: Gold trading around ${gold.price} and Silver at ${silver.price}.`,
           predict: "Broad commodity basket trajectory signaling sustained real-asset allocation."
         },
         crude: {
