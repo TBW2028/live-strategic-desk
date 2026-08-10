@@ -48,7 +48,7 @@
       border-radius: 999px; font-size: 0.72rem; font-family: var(--font-mono);
       background: var(--card); border: 1px solid var(--border);
     }
-    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 8px var(--amber); transition: background 0.3s ease; }
 
     .shell { max-width: 1380px; margin: 2rem auto; padding: 0 1.5rem; }
 
@@ -120,35 +120,35 @@
           </div>
           <div>
             <div class="metric-val" style="color:var(--teal)">BALANCED</div>
-            <div class="metric-change">Vol Index (VIX): 14.80</div>
+            <div class="metric-change" id="val-vix">Vol Index (VIX): 14.80</div>
           </div>
         </div>
 
         <div class="asset-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
           <div class="asset-tile">
             <div class="asset-name">NIFTY 50 (India)</div>
-            <div class="asset-price">24,320.10</div>
-            <div class="asset-chg up">+0.85% • TCS +2.4%</div>
+            <div class="asset-price" id="price-nifty">24,320.10</div>
+            <div class="asset-chg up" id="chg-nifty">+0.85% • TCS +2.4%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">NASDAQ 100 (US)</div>
-            <div class="asset-price">19,840.50</div>
-            <div class="asset-chg up">+1.12% • NVDA +3.1%</div>
+            <div class="asset-price" id="price-nasdaq">19,840.50</div>
+            <div class="asset-chg up" id="chg-nasdaq">+1.12% • NVDA +3.1%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">KOSPI (S. Korea)</div>
-            <div class="asset-price">2,710.30</div>
-            <div class="asset-chg down">-0.42% • Samsung -1.1%</div>
+            <div class="asset-price" id="price-kospi">2,710.30</div>
+            <div class="asset-chg down" id="chg-kospi">-0.42% • Samsung -1.1%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">S&P 500 (US)</div>
-            <div class="asset-price">5,540.20</div>
-            <div class="asset-chg up">+0.65% • Apple +1.5%</div>
+            <div class="asset-price" id="price-sp500">5,540.20</div>
+            <div class="asset-chg up" id="chg-sp500">+0.65% • Apple +1.5%</div>
           </div>
           <div class="asset-tile" style="border-color: var(--amber);">
             <div class="asset-name" style="color:var(--amber)">DAX 40 (Germany)</div>
-            <div class="asset-price">18,120.40</div>
-            <div class="asset-chg down">-2.15% • BASF -4.2%</div>
+            <div class="asset-price" id="price-dax">18,120.40</div>
+            <div class="asset-chg down" id="chg-dax">-2.15% • BASF -4.2%</div>
           </div>
         </div>
 
@@ -173,7 +173,7 @@
           </div>
           <div>
             <div class="metric-val" id="val-dxy">103.20</div>
-            <div class="metric-change down">DXY Index -0.45%</div>
+            <div class="metric-change down" id="chg-dxy">DXY Index -0.45%</div>
           </div>
         </div>
 
@@ -181,33 +181,33 @@
         <div class="asset-grid">
           <div class="asset-tile">
             <div class="asset-name">USD/INR</div>
-            <div class="asset-price">83.92</div>
-            <div class="asset-chg down">-0.12%</div>
+            <div class="asset-price" id="price-usdinr">83.92</div>
+            <div class="asset-chg down" id="chg-usdinr">-0.12%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">EUR/USD</div>
-            <div class="asset-price">1.092</div>
-            <div class="asset-chg up">+0.30%</div>
+            <div class="asset-price" id="price-eurusd">1.092</div>
+            <div class="asset-chg up" id="chg-eurusd">+0.30%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">USD/JPY</div>
-            <div class="asset-price">154.20</div>
-            <div class="asset-chg down">-0.85%</div>
+            <div class="asset-price" id="price-usdjpy">154.20</div>
+            <div class="asset-chg down" id="chg-usdjpy">-0.85%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">GBP/USD</div>
-            <div class="asset-price">1.285</div>
-            <div class="asset-chg up">+0.22%</div>
+            <div class="asset-price" id="price-gbpusd">1.285</div>
+            <div class="asset-chg up" id="chg-gbpusd">+0.22%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">USD/CNH</div>
-            <div class="asset-price">7.240</div>
-            <div class="asset-chg down">-0.08%</div>
+            <div class="asset-price" id="price-usdchn">7.240</div>
+            <div class="asset-chg down" id="chg-usdchn">-0.08%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">AUD/USD</div>
-            <div class="asset-price">0.665</div>
-            <div class="asset-chg up">+0.45%</div>
+            <div class="asset-price" id="price-audusd">0.665</div>
+            <div class="asset-chg up" id="chg-audusd">+0.45%</div>
           </div>
         </div>
 
@@ -243,8 +243,8 @@
             <div class="card-title">Metals, Energy & Agriculture</div>
           </div>
           <div>
-            <div class="metric-val">$2,415.50</div>
-            <div class="metric-change up">Gold +0.72%</div>
+            <div class="metric-val" id="val-gold">$2,415.50</div>
+            <div class="metric-change up" id="val-gold-chg">Gold +0.72%</div>
           </div>
         </div>
 
@@ -252,33 +252,33 @@
         <div class="asset-grid">
           <div class="asset-tile">
             <div class="asset-name">Gold</div>
-            <div class="asset-price">$2,415.50</div>
-            <div class="asset-chg up">+0.72%</div>
+            <div class="asset-price" id="price-gold">$2,415.50</div>
+            <div class="asset-chg up" id="chg-gold">+0.72%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">Silver</div>
-            <div class="asset-price">$28.40</div>
-            <div class="asset-chg up">+1.45%</div>
+            <div class="asset-price" id="price-silver">$28.40</div>
+            <div class="asset-chg up" id="chg-silver">+1.45%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">Copper</div>
-            <div class="asset-price">$4.12/lb</div>
-            <div class="asset-chg up">+0.80%</div>
+            <div class="asset-price" id="price-copper">$4.12/lb</div>
+            <div class="asset-chg up" id="chg-copper">+0.80%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">Wheat</div>
-            <div class="asset-price">$542.00</div>
-            <div class="asset-chg down">-1.10%</div>
+            <div class="asset-price" id="price-wheat">$542.00</div>
+            <div class="asset-chg down" id="chg-wheat">-1.10%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">Cocoa</div>
-            <div class="asset-price">$7,850</div>
-            <div class="asset-chg up">+3.20%</div>
+            <div class="asset-price" id="price-cocoa">$7,850</div>
+            <div class="asset-chg up" id="chg-cocoa">+3.20%</div>
           </div>
           <div class="asset-tile">
             <div class="asset-name">Cotton</div>
-            <div class="asset-price">$68.20</div>
-            <div class="asset-chg down">-0.35%</div>
+            <div class="asset-price" id="price-cotton">$68.20</div>
+            <div class="asset-chg down" id="chg-cotton">-0.35%</div>
           </div>
         </div>
 
@@ -314,8 +314,8 @@
             <div class="card-title">Geopolitical Threat & Supply Vector</div>
           </div>
           <div>
-            <div class="metric-val" style="color:var(--red);">ELEVATED</div>
-            <div class="metric-change down">Transit Friction: 82%</div>
+            <div class="metric-val" style="color:var(--red);" id="val-geo-risk">ELEVATED</div>
+            <div class="metric-change down" id="val-geo-friction">Transit Friction: 82%</div>
           </div>
         </div>
 
@@ -352,7 +352,7 @@
           </div>
           <div>
             <div class="metric-val" id="val-brent">$82.40</div>
-            <div class="metric-change up">Brent +1.15% • WTI $78.10 (+0.9%)</div>
+            <div class="metric-change up" id="val-crude-summary">Brent +1.15% • WTI $78.10 (+0.9%)</div>
           </div>
         </div>
 
@@ -384,7 +384,7 @@
   </div>
 
   <script>
-    const STREAM_URL = 'https://live-strategic-desk.onrender.com/api/stream';
+    const STREAM_URL = '/api/stream';
 
     function initStream() {
       const eventSource = new EventSource(STREAM_URL);
@@ -392,6 +392,7 @@
       eventSource.onopen = () => {
         document.getElementById('live-status').innerText = 'SYSTEM ENGINE: LIVE (RENDER + GEMINI)';
         document.getElementById('live-dot').style.background = 'var(--teal)';
+        document.getElementById('live-dot').style.boxShadow = '0 0 8px var(--teal)';
       };
 
       eventSource.onmessage = (e) => {
@@ -403,31 +404,82 @@
         }
       };
 
-      eventSource.onerror = () => {
+      eventSource.onerror = (err) => {
+        console.warn("SSE Connection active check...", err);
         document.getElementById('live-status').innerText = 'RECONNECTING TO ENGINE...';
         document.getElementById('live-dot').style.background = 'var(--amber)';
+        document.getElementById('live-dot').style.boxShadow = '0 0 8px var(--amber)';
       };
     }
 
+    function setTile(priceId, chgId, pVal, cVal, dirClass) {
+      const elP = document.getElementById(priceId);
+      const elC = document.getElementById(chgId);
+      if (elP && pVal) elP.innerText = pVal;
+      if (elC && cVal) {
+        elC.innerText = cVal;
+        if (dirClass) elC.className = `asset-chg ${dirClass}`;
+      }
+    }
+
     function updateUI(data) {
-      const { insights } = data;
+      if (!data) return;
 
-      if (insights) {
+      // 1. UPDATE LIVE TICKER PRICES
+      if (data.prices) {
+        const p = data.prices;
+        setTile('price-nifty', 'chg-nifty', p.nifty?.price, p.nifty?.change, p.nifty?.dir);
+        setTile('price-nasdaq', 'chg-nasdaq', p.nasdaq?.price, p.nasdaq?.change, p.nasdaq?.dir);
+        setTile('price-kospi', 'chg-kospi', p.kospi?.price, p.kospi?.change, p.kospi?.dir);
+        setTile('price-sp500', 'chg-sp500', p.sp500?.price, p.sp500?.change, p.sp500?.dir);
+        setTile('price-dax', 'chg-dax', p.dax?.price, p.dax?.change, p.dax?.dir);
+
+        setTile('price-usdinr', 'chg-usdinr', p.usdinr?.price, p.usdinr?.change, p.usdinr?.dir);
+        setTile('price-eurusd', 'chg-eurusd', p.eurusd?.price, p.eurusd?.change, p.eurusd?.dir);
+        setTile('price-usdjpy', 'chg-usdjpy', p.usdjpy?.price, p.usdjpy?.change, p.usdjpy?.dir);
+        setTile('price-gbpusd', 'chg-gbpusd', p.gbpusd?.price, p.gbpusd?.change, p.gbpusd?.dir);
+        setTile('price-usdchn', 'chg-usdchn', p.usdchn?.price, p.usdchn?.change, p.usdchn?.dir);
+        setTile('price-audusd', 'chg-audusd', p.audusd?.price, p.audusd?.change, p.audusd?.dir);
+
+        setTile('price-gold', 'chg-gold', p.gold?.price, p.gold?.change, p.gold?.dir);
+        setTile('price-silver', 'chg-silver', p.silver?.price, p.silver?.change, p.silver?.dir);
+        setTile('price-copper', 'chg-copper', p.copper?.price, p.copper?.change, p.copper?.dir);
+        setTile('price-wheat', 'chg-wheat', p.wheat?.price, p.wheat?.change, p.wheat?.dir);
+        setTile('price-cocoa', 'chg-cocoa', p.cocoa?.price, p.cocoa?.change, p.cocoa?.dir);
+        setTile('price-cotton', 'chg-cotton', p.cotton?.price, p.cotton?.change, p.cotton?.dir);
+
+        if (p.dxy?.price) document.getElementById('val-dxy').innerText = p.dxy.price;
+        if (p.dxy?.change) document.getElementById('chg-dxy').innerText = `DXY Index ${p.dxy.change}`;
+        if (p.gold?.price) document.getElementById('val-gold').innerText = p.gold.price;
+        if (p.gold?.change) document.getElementById('val-gold-chg').innerText = `Gold ${p.gold.change}`;
+        if (p.brent?.price) document.getElementById('val-brent').innerText = p.brent.price;
+        if (p.brent?.change) document.getElementById('val-crude-summary').innerText = `Brent ${p.brent.change} • WTI ${p.wti?.price || ''} (${p.wti?.change || ''})`;
+      }
+
+      // 2. UPDATE AI ANALYSIS & PREDICTION TEXT
+      if (data.insights) {
+        const { insights } = data;
+
         if (insights.stocks) {
-          document.getElementById('stocks-analyse').innerText = insights.stocks.analyse;
-          document.getElementById('stocks-predict').innerText = insights.stocks.predict;
+          document.getElementById('stocks-analyse').innerText = insights.stocks.analyse || 'Analyzing...';
+          document.getElementById('stocks-predict').innerText = insights.stocks.predict || 'Analyzing...';
         }
-        document.getElementById('geo-analyse').innerText = insights.geopolitical.analyse;
-        document.getElementById('geo-predict').innerText = insights.geopolitical.predict;
-
-        document.getElementById('forex-analyse').innerText = insights.forex.analyse;
-        document.getElementById('forex-predict').innerText = insights.forex.predict;
-
-        document.getElementById('gold-analyse').innerText = insights.commodities.analyse;
-        document.getElementById('gold-predict').innerText = insights.commodities.predict;
-
-        document.getElementById('crude-analyse').innerText = insights.crude.analyse;
-        document.getElementById('crude-predict').innerText = insights.crude.predict;
+        if (insights.geopolitical) {
+          document.getElementById('geo-analyse').innerText = insights.geopolitical.analyse || 'Analyzing...';
+          document.getElementById('geo-predict').innerText = insights.geopolitical.predict || 'Analyzing...';
+        }
+        if (insights.forex) {
+          document.getElementById('forex-analyse').innerText = insights.forex.analyse || 'Analyzing...';
+          document.getElementById('forex-predict').innerText = insights.forex.predict || 'Analyzing...';
+        }
+        if (insights.commodities) {
+          document.getElementById('gold-analyse').innerText = insights.commodities.analyse || 'Analyzing...';
+          document.getElementById('gold-predict').innerText = insights.commodities.predict || 'Analyzing...';
+        }
+        if (insights.crude) {
+          document.getElementById('crude-analyse').innerText = insights.crude.analyse || 'Analyzing...';
+          document.getElementById('crude-predict').innerText = insights.crude.predict || 'Analyzing...';
+        }
       }
 
       document.querySelectorAll('.card').forEach(c => {
