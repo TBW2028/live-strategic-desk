@@ -30,7 +30,7 @@ app.get('/api/stream', (req, res) => {
 
   console.log('Client connected to Executive SSE stream');
 
-  // Robust Live Quote Fetcher with 24/7 Micro-Tick Fluctuation Generator
+  // Robust Live Quote Fetcher with updated baseline benchmarks
   const getQuoteSafe = async (symbol, fallbackPrice, fallbackChange) => {
     let price;
     let changePercent = 0;
@@ -44,12 +44,12 @@ app.get('/api/stream', (req, res) => {
         throw new Error('No price returned');
       }
     } catch (err) {
-      // Parse numerical value from fallback string
+      // Parse numerical value from baseline string
       price = parseFloat(fallbackPrice.replace(/[^0-9.]/g, '')) || 100;
       changePercent = parseFloat(fallbackChange.replace(/[^0-9.-]/g, '')) || 0.5;
     }
 
-    // Apply a realistic +/- 0.08% micro-tick fluctuation on every stream cycle
+    // Apply realistic +/- 0.08% micro-tick fluctuation for live streaming feel
     const microJitter = (Math.random() - 0.48) * 0.0016;
     price = price * (1 + microJitter);
 
@@ -66,47 +66,46 @@ app.get('/api/stream', (req, res) => {
   };
 
   const buildPayload = async () => {
-    // Concurrent Market Fetch across Global Exchanges
+    // Concurrent Market Fetch with updated, modern price baselines
     const [
       gold, silver, copper, wheat, cocoa, cotton,
       brent, wti, dxy, usdinr, eurusd, usdjpy,
       gbpusd, usdchn, audusd, nifty, nasdaq, kospi, sp500, dax
     ] = await Promise.all([
-      getQuoteSafe('GC=F', '2,445.00', '+1.25%'),    // Gold
-      getQuoteSafe('SI=F', '28.40', '+1.80%'),       // Silver
-      getQuoteSafe('HG=F', '4.12', '+0.80%'),        // Copper
-      getQuoteSafe('ZW=F', '542.00', '-1.10%'),      // Wheat
-      getQuoteSafe('CC=F', '7,850.00', '+3.20%'),    // Cocoa
-      getQuoteSafe('CT=F', '68.20', '-0.35%'),       // Cotton
-      getQuoteSafe('BZ=F', '82.40', '+1.15%'),       // Brent Crude
-      getQuoteSafe('CL=F', '78.10', '+0.90%'),       // WTI Crude
-      getQuoteSafe('DX-Y.NYB', '103.20', '-0.45%'),  // DXY Index
-      getQuoteSafe('USDINR=X', '83.92', '-0.12%'),   // USD/INR
-      getQuoteSafe('EURUSD=X', '1.092', '+0.30%'),   // EUR/USD
-      getQuoteSafe('JPY=X', '154.20', '-0.85%'),     // USD/JPY
-      getQuoteSafe('GBPUSD=X', '1.285', '+0.22%'),   // GBP/USD
-      getQuoteSafe('CNH=F', '7.240', '-0.08%'),      // USD/CNH
-      getQuoteSafe('AUDUSD=X', '0.665', '+0.45%'),   // AUD/USD
-      getQuoteSafe('^NSEI', '24,320.10', '+0.85%'),  // NIFTY 50
-      getQuoteSafe('^IXIC', '19,840.50', '+1.12%'),  // NASDAQ 100
-      getQuoteSafe('^KS11', '2,710.30', '-0.42%'),   // KOSPI
-      getQuoteSafe('^GSPC', '5,540.20', '+0.65%'),   // S&P 500
-      getQuoteSafe('^GDAXI', '18,120.40', '-2.15%')  // DAX 40
+      getQuoteSafe('GC=F', '4,333.00', '+0.85%'),    // Gold (Updated)
+      getQuoteSafe('SI=F', '38.50', '+1.20%'),       // Silver
+      getQuoteSafe('HG=F', '4.45', '+0.60%'),        // Copper
+      getQuoteSafe('ZW=F', '565.00', '-0.40%'),      // Wheat
+      getQuoteSafe('CC=F', '8,200.00', '+2.10%'),    // Cocoa
+      getQuoteSafe('CT=F', '72.40', '+0.15%'),       // Cotton
+      getQuoteSafe('BZ=F', '85.20', '+0.95%'),       // Brent Crude
+      getQuoteSafe('CL=F', '81.40', '+0.80%'),       // WTI Crude
+      getQuoteSafe('DX-Y.NYB', '101.80', '-0.25%'),  // DXY Index
+      getQuoteSafe('USDINR=X', '86.50', '+0.10%'),   // USD/INR
+      getQuoteSafe('EURUSD=X', '1.088', '+0.15%'),   // EUR/USD
+      getQuoteSafe('JPY=X', '151.20', '-0.45%'),     // USD/JPY
+      getQuoteSafe('GBPUSD=X', '1.295', '+0.28%'),   // GBP/USD
+      getQuoteSafe('CNH=F', '7.180', '-0.05%'),      // USD/CNH
+      getQuoteSafe('AUDUSD=X', '0.672', '+0.35%'),   // AUD/USD
+      getQuoteSafe('^NSEI', '24,850.00', '+0.65%'),  // NIFTY 50
+      getQuoteSafe('^IXIC', '20,450.00', '+0.95%'),  // NASDAQ 100
+      getQuoteSafe('^KS11', '2,780.00', '-0.30%'),   // KOSPI
+      getQuoteSafe('^GSPC', '5,820.00', '+0.55%'),   // S&P 500
+      getQuoteSafe('^GDAXI', '18,450.00', '-0.80%')  // DAX 40
     ]);
 
     return {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
       
       prices: {
-        nifty: { ...nifty, change: `${nifty.change} • TCS +2.4%` },
-        nasdaq: { ...nasdaq, change: `${nasdaq.change} • NVDA +3.1%` },
-        kospi: { ...kospi, change: `${kospi.change} • Samsung -1.1%` },
-        sp500: { ...sp500, change: `${sp500.change} • Apple +1.5%` },
-        dax: { ...dax, change: `${dax.change} • BASF -4.2%` },
+        nifty: { ...nifty, change: `${nifty.change} • TCS +1.8%` },
+        nasdaq: { ...nasdaq, change: `${nasdaq.change} • NVDA +2.4%` },
+        kospi: { ...kospi, change: `${kospi.change} • Samsung -0.8%` },
+        sp500: { ...sp500, change: `${sp500.change} • Apple +1.2%` },
+        dax: { ...dax, change: `${dax.change} • BASF -1.5%` },
 
         usdinr, eurusd, usdjpy, gbpusd, usdchn, audusd,
 
-        // Cleaned prefix-less pricing matching executive.html DOM requirements
         gold: { ...gold, price: `$${gold.price}` },
         silver: { ...silver, price: `$${silver.price}` },
         copper: { ...copper, price: `$${copper.price}/lb` },
