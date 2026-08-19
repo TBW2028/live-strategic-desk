@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "earthquake": {
+    "list_min_mag": 4.5,
+    "watch_mag": 5.5,
+    "alert_mag": 6.0,
+    "escalate_mag": 7.0,
+    "sequence_alert_mag": 5.5,
+    "sequence_escalate_mag": 6.5
+  },
+  "volcano": {
+    "alert_levels": ["Watch", "Warning", "Orange", "Red"],
+    "watch_levels": ["Advisory", "Yellow"]
+  },
+  "cyclone": {
+    "alert_on_named_storm": true,
+    "escalate_on_hurricane": true
+  },
+  "gdacs": {
+    "include_event_types": ["EQ", "TC", "FL", "VO", "DR"],
+    "exclude_event_types": ["WF"],
+    "min_alert_level": "Orange",
+    "store_green": false,
+    "store_forest_fire": false
+  },
+  "flood": {
+    "alert_on_official_warning": true
+  },
+  "health": {
+    "official_notices_only": true,
+    "alert_on_who_don": true
+  }
+}
