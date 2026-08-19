@@ -110,7 +110,25 @@ def refresh():
         return jsonify({"error": "unauthorized"}), 401
     try:
         from refresh_all import run_refresh
-        return jsonify(run_refresh())
+        full = run_refresh()
+        # Slim response for cron-job.org size limits
+        slim_steps = []
+        for s in full.get("steps") or []:
+            if not isinstance(s, dict):
+                continue
+            slim_steps.append({
+                k: s.get(k)
+                for k in ("source", "status", "inserted", "updated", "received", "skipped",
+                          "error", "sequences_created", "forecasts_updated")
+                if k in s
+            })
+        return jsonify({
+            "status": full.get("status", "ok"),
+            "started_at": full.get("started_at"),
+            "finished_at": full.get("finished_at"),
+            "steps": slim_steps,
+            "error": full.get("error"),
+        })
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
 
