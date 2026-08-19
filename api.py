@@ -35,27 +35,35 @@ def refresh():
     try:
         from refresh_all import run_refresh
         full = run_refresh()
-        slim_steps = []
+        # Ultra-slim: never send full nested multi/GDACS payloads to cron
+        sources = []
         for s in full.get("steps") or []:
             if not isinstance(s, dict):
                 continue
-            slim_steps.append({
-                k: s.get(k)
-                for k in (
-                    "source", "status", "inserted", "updated", "received", "skipped",
-                    "error", "sequences_created", "forecasts_updated"
-                )
-                if k in s
-            })
+            src = s.get("source")
+            if not src and "received" in s:
+                src = "ingest"
+            if not src and "forecasts_updated" in s:
+                src = "forecasts"
+            if not src and "sequences_created" in s:
+                src = "sequences"
+            # Nested multi result
+            if s.get("steps") and isinstance(s.get("steps"), list):
+                for sub in s["steps"]:
+                    if isinstance(sub, dict) and sub.get("source"):
+                        sources.append(sub.get("source"))
+                src = src or "multi"
+            if src:
+                sources.append(src)
         return jsonify({
             "status": full.get("status", "ok"),
-            "started_at": full.get("started_at"),
             "finished_at": full.get("finished_at"),
-            "steps": slim_steps,
+            "sources": sources[:20],
             "error": full.get("error"),
         })
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
+
 
 @app.route("/api/events/recent")
 def events_recent():
